@@ -7,16 +7,6 @@ import { RestaurantModule } from './modules/restaurant/restaurant.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST,
-      port: +process.env.DB_PORT,
-      username: process.env.DB_USERNAME,
-      database: process.env.DB_DATABASE,
-      synchronize: process.env.NODE_ENV !== 'prod',
-      logging: process.env.NODE_ENV !== 'prod',
-      entities: ['dist/**/*.entity{.ts,.js}'],
-    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: process.env.NODE_ENV === 'dev' ? '.dev.env' : '.test.env',
@@ -30,6 +20,16 @@ import { RestaurantModule } from './modules/restaurant/restaurant.module';
         DB_USERNAME: Joi.string(),
         DB_DATABASE: Joi.string(),
       }),
+    }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      database: 'uber',
+      port: +process.env.DB_PORT,
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      entities: ['dist/**/*.entity{.ts,.js}'],
+      synchronize: true,
+      logging: true,
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true,
