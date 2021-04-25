@@ -14,7 +14,7 @@ import { RestaurantModule } from './modules/restaurant/restaurant.module';
       username: process.env.DB_USERNAME,
       database: process.env.DB_DATABASE,
       synchronize: process.env.NODE_ENV !== 'prod',
-      logging: true,
+      logging: process.env.NODE_ENV !== 'prod',
       entities: ['dist/**/*.entity{.ts,.js}'],
     }),
     ConfigModule.forRoot({
